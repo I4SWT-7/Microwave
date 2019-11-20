@@ -14,6 +14,7 @@ namespace Microwave.Test.Unit
         [SetUp]
         public void Setup()
         {
+
             output = Substitute.For<IOutput>();
             uut = new Display(output);
         }
