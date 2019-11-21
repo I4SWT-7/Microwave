@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NSubstitute;
+using NUnit;
 
 namespace Microwave.test.integration
 {
-    public class IT1_Cookcontroller_display
+    class IT2_Cookcontroller_timer
     {
-
     }
 }
