@@ -24,6 +24,7 @@ namespace Microwave.test.integration
         public CookController _uut;
         public IUserInterface _userInterface;
 
+
         [SetUp]
         public void SetUp()
         {
@@ -43,12 +44,11 @@ namespace Microwave.test.integration
         }
 
         [Test]
-        public void StartCooking_OnTimeExpire_CookingIsDone_Called()
+        public void StartCooking_Check_TimeRemaining()
         {
-            _uut.StartCooking(50,1);
-            Thread.Sleep(1500);
-            _userInterface.Received(1).CookingIsDone();
-
+            _uut.StartCooking(50,3);
+            Thread.Sleep(2500);
+            Assert.That(_timer.TimeRemaining, Is.EqualTo(1));
         }
 
         [Test]
@@ -60,11 +60,28 @@ namespace Microwave.test.integration
         }
 
         [Test]
+        public void StartCooking_OnTimeExpire_Not_CookingIsDone_NotCalled()
+        {
+            _uut.StartCooking(50, 1);
+            Thread.Sleep(900);
+            _userInterface.DidNotReceive().CookingIsDone();
+        }
+
+        [Test]
         public void OnTimeTick()
         {
             _uut.StartCooking(50, 60);
             Thread.Sleep(1500);
             _display.Received(1).ShowTime(0,59);
         }
+        [Test]
+        public void OnStop()
+        {
+            _uut.StartCooking(50, 60);
+            _uut.Stop();
+            Thread.Sleep(3000);
+            Assert.That(_timer.TimeRemaining, Is.EqualTo(60));
+        }
+      
     }   
 }

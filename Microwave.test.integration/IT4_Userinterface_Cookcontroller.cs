@@ -50,7 +50,7 @@ namespace Microwave.test.integration
         public void test_start_cooking()
         {
             // Lav fakes for button, time og power. Muligvis mocks til (time og power)
-            //Brug button til at trigge userinterfaced som kalder cookcontroller, og assert at cookcontroller kalder power og time med de rigtige tal.
+            // Brug button til at trigge userinterfaced som kalder cookcontroller, og assert at cookcontroller kalder power og time med de rigtige tal.
             // Der skal laves boundary analysis, der tjekkes for disse tal (timer og power tal)
             _powerButton.Press();
 
