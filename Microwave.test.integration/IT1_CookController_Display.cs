@@ -23,18 +23,18 @@ namespace Microwave.test.integration
         private IPowerTube _powertube;
         private IOutput _output;
         private CookController _uut;
-        private TestTimer _testTimer;
+        private TestTimer _fakeTimer;
 
         [SetUp]
         public void SetUp()
         {
             _output = Substitute.For<IOutput>();
-            _testTimer = new TestTimer();
+            _fakeTimer = new TestTimer();
             _display = new Display(_output);
-            _timer = Substitute.For<ITimer>();
+            //_timer = Substitute.For<ITimer>();
             _powertube = Substitute.For<IPowerTube>();
             
-            _uut = new CookController(_testTimer,_display,_powertube);
+            _uut = new CookController(_fakeTimer,_display,_powertube);
 
 
         }
@@ -42,11 +42,8 @@ namespace Microwave.test.integration
         [Test]
         public void StartCooking_ShowTime()
         {
-            
             _uut.StartCooking(50,30);
-            //_timer.TimeRemaining.Returns(30);
-            
-            _testTimer.RaiseEvent();
+            _fakeTimer.RaiseEvent();
             _output.Received().OutputLine(Arg.Is<string>(str => str.Contains("00:30")));
         }
 
