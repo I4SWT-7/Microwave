@@ -44,7 +44,7 @@ namespace Microwave.test.integration
         }
 
         [Test]
-        public void StartCooking_OnTimeExpire_CookingIsDone_Called()
+        public void StartCooking_Check_TimeRemaining()
         {
             _uut.StartCooking(50,3);
             Thread.Sleep(2500);
