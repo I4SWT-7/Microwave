@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using MicrowaveOvenClasses.Boundary;
 using MicrowaveOvenClasses.Controllers;
 using NUnit.Framework;
 using NSubstitute;
 using MicrowaveOvenClasses.Interfaces;
-
+using Timer = MicrowaveOvenClasses.Boundary.Timer;
 
 
 namespace Microwave.test.integration
@@ -16,12 +17,12 @@ namespace Microwave.test.integration
     [TestFixture]
     public class IT2_Cookcontroller_timer
     {
-        private IDisplay _display;
-        private ITimer _timer;
-        private IPowerTube _powerTube;
-        private IOutput _output;
-        private CookController _uut;
-        private IUserInterface _userInterface;
+        public IDisplay _display;
+        public ITimer _timer;
+        public IPowerTube _powerTube;
+        public IOutput _output;
+        public CookController _uut;
+        public IUserInterface _userInterface;
 
         [SetUp]
         public void SetUp()
@@ -34,15 +35,36 @@ namespace Microwave.test.integration
             _uut = new CookController(_timer, _display, _powerTube);
         }
         [Test]
-        public void StartCooking_TurnedOn_TimerStarted(int power, int time)
+        public void StartCooking_OnTimeExpired_PowerTube_TurnOff()
         {
-            var isOn = false;
-           _powerTube.When(x => x.TurnOn(power))
-               .Do(x => isOn = true);
-           _powerTube.TurnOn(power);
-           Assert.IsTrue(isOn);
+            _uut.StartCooking(100,1);
+            Thread.Sleep(1500);
+            _powerTube.Received(1).TurnOff();
         }
 
+        [Test]
+        public void StartCooking_OnTimeExpire_CookingIsDone_Called()
+        {
+            _uut.StartCooking(50,1);
+            Thread.Sleep(1500);
+            _userInterface.Received(1).CookingIsDone();
 
+        }
+
+        [Test]
+        public void StartCooking_OnTimeExpired_Not_CookingIsDone_NotCalled()
+        {
+            _uut.StartCooking(100,1);
+            Thread.Sleep(900);
+            _userInterface.DidNotReceive().CookingIsDone();
+        }
+
+        [Test]
+        public void OnTimeTick()
+        {
+            _uut.StartCooking(50, 60);
+            Thread.Sleep(1500);
+            _display.Received(1).ShowTime(0,59);
+        }
     }   
 }
