@@ -38,8 +38,10 @@ namespace Microwave.test.integration
         [Test]
         public void StartCooking_ShowTime()
         {
-            _uut.StartCooking(50,30);
-            _output.Received(1).OutputLine($"Display shows: 50 W");
+            _uut.StartCooking(50,60);
+            _timer.TimeRemaining.Returns(30);
+            _timer.TimerTick += Raise.EventWith(this, EventArgs.Empty);
+            _output.Received().OutputLine(Arg.Is<string>(str => str.Contains("00:30")));
         }
 
 
