@@ -8,5 +8,6 @@ namespace Microwave.test.integration
 {
     public class IT1_Cookcontroller_display
     {
+
     }
 }
