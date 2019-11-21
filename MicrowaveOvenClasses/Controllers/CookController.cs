@@ -14,7 +14,7 @@ namespace MicrowaveOvenClasses.Controllers
         private IDisplay myDisplay;
         private IPowerTube myPowerTube;
         private ITimer myTimer;
-
+        
         public CookController(
             ITimer timer,
             IDisplay display,
