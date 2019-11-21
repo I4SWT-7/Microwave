@@ -38,7 +38,7 @@ namespace Microwave.test.integration
             int power = 51;
             int time = 10;
             cookController.StartCooking(power, time);
-            output.Received().OutputLine(Arg.Is<string>(str => str.Contains("51 %")));
+            output.Received().OutputLine(Arg.Is<string>(str => str.Contains("7 %")));
         }
     }
 }
