@@ -39,7 +39,8 @@ namespace MicrowaveOvenClasses.Controllers
 
         public void StartCooking(int power, int time)
         {
-            myPowerTube.TurnOn(power);
+            myPowerTube.TurnOn(power/7);
+            //Rettet til at omregne til procent da vi modtager power som watt.
             myTimer.Start(time);
             isCooking = true;
         }
