@@ -33,12 +33,22 @@ namespace Microwave.test.integration
 
 
         [Test]
-        public void Cookcontroller_powerOn_iscalled()
+        public void Cookcontroller_turnOnPowerTube_iscalled()
         {
-            int power = 51;
+            int power = 50;
             int time = 10;
             cookController.StartCooking(power, time);
-            output.Received().OutputLine(Arg.Is<string>(str => str.Contains("51 %")));
+            output.Received().OutputLine(Arg.Is<string>(str => str.Contains("7 %")));
+        }
+
+        [Test]
+        public void Cookcontroller_turnOffPowerTube_iscalled()
+        {
+            int power = 50;
+            int time = 10;
+            cookController.StartCooking(power, time);
+            cookController.Stop();
+            output.Received().OutputLine(Arg.Is<string>(str => str.Contains("PowerTube turned off")));
         }
     }
 }
