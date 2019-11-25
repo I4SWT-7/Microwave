@@ -72,7 +72,8 @@ namespace Microwave.test.integration
         {
             _uut.StartCooking(50, 60);
             Thread.Sleep(1500);
-            _display.Received(1).ShowTime(0,59);
+            _output.Received(1).OutputLine("Display shows: 00:59");
+
         }
         [Test]
         public void OnStop()
