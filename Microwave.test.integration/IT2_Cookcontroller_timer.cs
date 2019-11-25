@@ -32,7 +32,7 @@ namespace Microwave.test.integration
             _powerTube = Substitute.For<IPowerTube>();
             _timer = new Timer();
             _userInterface = Substitute.For<IUserInterface>();
-            _uut = new CookController(_timer, _display, _powerTube);
+            _uut = new CookController(_timer, _display, _powerTube, _userInterface);
         }
         [Test]
         public void StartCooking_OnTimeExpired_PowerTube_TurnOff()
