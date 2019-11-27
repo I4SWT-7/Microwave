@@ -27,7 +27,6 @@ namespace Microwave.test.integration
         {
             //Subs
             _output = Substitute.For<IOutput>();
-            _light = Substitute.For<ILight>();
             _timer = Substitute.For<ITimer>();
             _door = Substitute.For<IDoor>();
             _powerButton = Substitute.For<IButton>();
@@ -47,14 +46,49 @@ namespace Microwave.test.integration
         }
 
         [Test]
-        public void test_start_cooking()
+        public void test_power_gets_set_by_PowerButton()
         {
-            // Lav fakes for button, time og power. Muligvis mocks til (time og power)
-            // Brug button til at trigge userinterfaced som kalder cookcontroller, og assert at cookcontroller kalder power og time med de rigtige tal.
-            // Der skal laves boundary analysis, der tjekkes for disse tal (timer og power tal)
-            _powerButton.Press();
-
+            _powerButton.Pressed += Raise.Event();
+            _output.Received(1).OutputLine("Display shows: 50 W");
         }
 
+        [Test]
+        public void test_time_gets_set_by_TimeButton()
+        {
+            _powerButton.Pressed += Raise.Event();
+            _timeButton.Pressed += Raise.Event();
+            _output.Received(1).OutputLine("Display shows: 01:00");
+        }
+
+        [Test]
+        public void test_start_cooking_by_startbutton()
+        {
+            _powerButton.Pressed += Raise.Event();
+            _timeButton.Pressed += Raise.Event();
+            _start_cancel_button.Pressed += Raise.Event();
+
+            _output.Received(1).OutputLine("PowerTube works with 7 %");
+        }
+
+        [Test]
+        public void test_door_closes_cancels_cooking()
+        {
+            _powerButton.Pressed += Raise.Event();
+            _timeButton.Pressed += Raise.Event();
+            _start_cancel_button.Pressed += Raise.Event();
+            _door.Opened += Raise.Event();
+            _output.Received().OutputLine("PowerTube turned off");
+        }
+
+        [Test]
+        public void test_that_open_door_interrupts_start_cooking()
+        {
+            _door.Opened += Raise.Event();
+            _powerButton.Pressed += Raise.Event();
+            _timeButton.Pressed += Raise.Event();
+            _start_cancel_button.Pressed += Raise.Event();
+            _output.Received(1).OutputLine("Light is turned on");
+            _output.DidNotReceive().OutputLine("PowerTube works with 7 %");
+        }
     }
 }
