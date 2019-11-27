@@ -79,11 +79,11 @@ namespace MicrowaveOvenClasses.Controllers
                     powerLevel = 50;
                     time = 1;
                     myLight.TurnOff();
-                    myDisplay.Clear();
+                    myDisplay.Clear(); //--
                     myState = States.READY;
                     break;
                 case States.SETTIME:
-                    myDisplay.Clear();
+                    myDisplay.Clear(); //--
                     myLight.TurnOn();
                     myCooker.StartCooking(powerLevel, time*60);
                     myState = States.COOKING;
