@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using MicrowaveOvenClasses.Boundary;
 using MicrowaveOvenClasses.Controllers;
@@ -10,13 +11,14 @@ using NSubstitute;
 using NUnit;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
+using Timer = MicrowaveOvenClasses.Boundary.Timer;
 
 namespace Microwave.test.integration
 {
     [TestFixture]
     class IT6_Cookcontroller_Userinterface
     {
-        private ICookController _uut;
+        private CookController _uut;
         private IUserInterface _userInterface;
         private ILight _light;
         private IDisplay _display;
@@ -43,9 +45,10 @@ namespace Microwave.test.integration
             _display = new Display(_output);
             _timer = new Timer();
             _powerTube = new PowerTube(_output);
+            _uut = new CookController(_timer, _display, _powerTube);
             _userInterface = new UserInterface(_powerButton, _timeButton, _start_cancel_button, _door, _display,
                 _light, _uut);
-            _uut = new CookController(_timer, _display, _powerTube);
+            _uut.UI = _userInterface;
         }
 
 
@@ -56,11 +59,9 @@ namespace Microwave.test.integration
             _timeButton.Pressed += Raise.Event();
             _start_cancel_button.Pressed += Raise.Event();
 
-            _timer.Expired += Raise.Event();
+            Thread.Sleep(6000);
 
-            _display.Received().Clear();
-            _light.Received().TurnOff();
-
+            _output.Received(1).OutputLine("Display cleared");
         }
 
     }

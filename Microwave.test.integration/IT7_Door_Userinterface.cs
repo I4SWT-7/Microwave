@@ -10,5 +10,6 @@ namespace Microwave.test.integration
 {
     class IT7_Door_Userinterface
     {
+
     }
 }
