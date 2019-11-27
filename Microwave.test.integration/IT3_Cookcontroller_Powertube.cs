@@ -15,20 +15,20 @@ namespace Microwave.test.integration
     [TestFixture]
     class IT3_Cookcontroller_Powertube
     {
-        private CookController cookController;
-        private Display display;
-        private ITimer timer;
-        private PowerTube powerTube;
-        private IOutput output;
+        private CookController _cookController;
+        private Display _display;
+        private ITimer _timer;
+        private PowerTube _powerTube;
+        private IOutput _output;
 
         [SetUp]
         public void Setup()
         {
-            output = Substitute.For<IOutput>();
-            display = new Display(output);
-            powerTube = new PowerTube(output);
-            timer = Substitute.For<ITimer>();
-            cookController = new CookController(timer, display, powerTube);
+            _output = Substitute.For<IOutput>();
+            _display = new Display(_output);
+            _powerTube = new PowerTube(_output);
+            _timer = Substitute.For<ITimer>();
+            _cookController = new CookController(_timer, _display, _powerTube);
         }
 
 
@@ -37,8 +37,8 @@ namespace Microwave.test.integration
         {
             int power = 50;
             int time = 10;
-            cookController.StartCooking(power, time);
-            output.Received().OutputLine(Arg.Is<string>(str => str.Contains("7 %")));
+            _cookController.StartCooking(power, time);
+            _output.Received().OutputLine(Arg.Is<string>(str => str.Contains("7 %")));
         }
 
         [Test]
@@ -46,9 +46,9 @@ namespace Microwave.test.integration
         {
             int power = 50;
             int time = 10;
-            cookController.StartCooking(power, time);
-            cookController.Stop();
-            output.Received().OutputLine(Arg.Is<string>(str => str.Contains("PowerTube turned off")));
+            _cookController.StartCooking(power, time);
+            _cookController.Stop();
+            _output.Received().OutputLine(Arg.Is<string>(str => str.Contains("PowerTube turned off")));
         }
     }
 }
