@@ -45,7 +45,6 @@ namespace Microwave.test.integration
         public void test_open_door_turns_on_light()
         {
             _door.Open();
-           // _output.Received(1).OutputLine("Light is turned on");
            _output.Received(1).OutputLine("Light turned on");
         }
         [Test]
