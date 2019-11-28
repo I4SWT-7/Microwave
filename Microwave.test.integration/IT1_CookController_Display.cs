@@ -23,13 +23,13 @@ namespace Microwave.test.integration
         private IPowerTube _powertube;
         private IOutput _output;
         private CookController _uut;
-        private TestTimer _fakeTimer;
+        private FakeTimer _fakeTimer;
 
         [SetUp]
         public void SetUp()
         {
             _output = Substitute.For<IOutput>();
-            _fakeTimer = new TestTimer();
+            _fakeTimer = new FakeTimer();
             _display = new Display(_output);
             //_timer = Substitute.For<ITimer>();
             _powertube = Substitute.For<IPowerTube>();

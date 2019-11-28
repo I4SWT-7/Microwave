@@ -22,7 +22,6 @@ namespace Microwave.Test.Unit
 
             uut.TimerTick += (sender, args) => pause.Set();
             uut.Start(2);
-            //Frank - hvad sker der her ?
 
             // wait for a tick, but no longer
             Assert.That(pause.WaitOne(1100));

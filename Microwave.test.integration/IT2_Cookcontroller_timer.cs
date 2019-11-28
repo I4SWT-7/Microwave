@@ -54,8 +54,8 @@ namespace Microwave.test.integration
         [Test]
         public void StartCooking_OnTimeExpired_Not_CookingIsDone_NotCalled()
         {
-            _uut.StartCooking(100,1);
-            Thread.Sleep(900);
+            _uut.StartCooking(100,3);
+            Thread.Sleep(1000);
             _userInterface.DidNotReceive().CookingIsDone();
         }
 

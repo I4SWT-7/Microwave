@@ -46,7 +46,7 @@
     <Compile Include="Boundary\Light.cs" />
     <Compile Include="Boundary\Output.cs" />
     <Compile Include="Boundary\PowerTube.cs" />
-    <Compile Include="Boundary\TestTimer.cs" />
+    <Compile Include="Boundary\FakeTimer.cs" />
     <Compile Include="Boundary\Timer.cs" />
     <Compile Include="Controllers\CookController.cs" />
     <Compile Include="Controllers\UserInterface.cs" />

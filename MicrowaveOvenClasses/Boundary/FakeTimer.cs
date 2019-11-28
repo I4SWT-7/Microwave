@@ -7,14 +7,14 @@ using MicrowaveOvenClasses.Interfaces;
 
 namespace MicrowaveOvenClasses.Boundary
 {
-    public class TestTimer : ITimer
+    public class FakeTimer : ITimer
     {
         public int TimeRemaining { get; private set; }
         public event EventHandler Expired;
         private System.Timers.Timer timer;
         public event EventHandler TimerTick;
 
-        public TestTimer()
+        public FakeTimer()
         {
             timer = new System.Timers.Timer();
         }
